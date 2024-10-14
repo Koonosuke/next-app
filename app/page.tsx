@@ -31,21 +31,21 @@ export default function HomePage() {
         </p>
         <div className="flex justify-center space-x-4">
           <a
-            href="https://github.com/myprofile"
+            href="https://github.com/Koonosuke"
             target="_blank"
             rel="noopener noreferrer"
           >
             <FaGithub size={30} />
           </a>
           <a
-            href="https://twitter.com/myprofile"
+            href="https://x.com/konosukebackend?s=11&t=h7d9sZn8ccPWL7nnhrrzUw"
             target="_blank"
             rel="noopener noreferrer"
           >
             <FaTwitter size={30} />
           </a>
           <a
-            href="https://zenn.dev/myprofile"
+            href="https://zenn.dev/koounosuke"
             target="_blank"
             rel="noopener noreferrer"
           >
