@@ -4,19 +4,17 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCf1C9Gqb8ROW92Wtc8Gd8ZiwTW_Ijoz7E",
-  authDomain: "portnextjs-19e37.firebaseapp.com",
-  projectId: "portnextjs-19e37",
-  storageBucket: "portnextjs-19e37.appspot.com",
-  messagingSenderId: "1058573600437",
-  appId: "1:1058573600437:web:307a45abbcc9a61cb3e0fc",
-  measurementId: "G-EPDFN465MD",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID,
 };
 // Firebaseアプリを初期化
 const app = initializeApp(firebaseConfig);
 
-// FirestoreとAuthenticationインスタンスの作成
 const db = getFirestore(app);
 const auth = getAuth(app);
-
 export { auth, db };
