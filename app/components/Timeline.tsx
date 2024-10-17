@@ -36,6 +36,7 @@ export default function Timeline() {
   const [showAuthModal, setShowAuthModal] = useState(false);
   const [authAction, setAuthAction] = useState<"add" | "delete" | null>(null);
   const [targetId, setTargetId] = useState<string | null>(null);
+  const [showForm, setShowForm] = useState(false);
 
   // Firestoreからデータを取得
   useEffect(() => {
@@ -149,73 +150,86 @@ export default function Timeline() {
       </div>
 
       <div className="mt-8">
-        <h3 className="text-xl font-semibold">新しい経験を追加</h3>
-        <input
-          type="text"
-          placeholder="タイトル"
-          value={newExperience.title}
-          onChange={(e) =>
-            setNewExperience({ ...newExperience, title: e.target.value })
-          }
-          className="border p-2 mb-2 w-full"
-        />
-        <input
-          type="text"
-          placeholder="ポジション"
-          value={newExperience.position}
-          onChange={(e) =>
-            setNewExperience({ ...newExperience, position: e.target.value })
-          }
-          className="border p-2 mb-2 w-full"
-        />
-        <input
-          type="text"
-          placeholder="開始日"
-          value={newExperience.startDate}
-          onChange={(e) =>
-            setNewExperience({ ...newExperience, startDate: e.target.value })
-          }
-          className="border p-2 mb-2 w-full"
-        />
-        <input
-          type="text"
-          placeholder="終了日"
-          value={newExperience.endDate}
-          onChange={(e) =>
-            setNewExperience({ ...newExperience, endDate: e.target.value })
-          }
-          className="border p-2 mb-2 w-full"
-        />
-        <input
-          type="text"
-          placeholder="リンク"
-          value={newExperience.link}
-          onChange={(e) =>
-            setNewExperience({ ...newExperience, link: e.target.value })
-          }
-          className="border p-2 mb-2 w-full"
-        />
-        <textarea
-          placeholder="説明"
-          value={newExperience.description}
-          onChange={(e) =>
-            setNewExperience({
-              ...newExperience,
-              description: e.target.value,
-            })
-          }
-          className="border p-2 mb-2 w-full"
-        />
         <button
-          onClick={() => {
-            console.log("追加ボタンが押されました");
-            setAuthAction("add");
-            setShowAuthModal(true); // 追加時に認証を求める
-          }}
+          onClick={() => setShowForm(!showForm)}
           className="bg-blue-500 text-white p-2 rounded"
         >
-          追加
+          {showForm ? "フォームを閉じる" : "新しい経験を追加"}
         </button>
+        {showForm && (
+          <div className="mt-4">
+            <h3 className="text-xl font-semibold">新しい経験を追加</h3>
+            <input
+              type="text"
+              placeholder="タイトル"
+              value={newExperience.title}
+              onChange={(e) =>
+                setNewExperience({ ...newExperience, title: e.target.value })
+              }
+              className="border p-2 mb-2 w-full"
+            />
+            <input
+              type="text"
+              placeholder="ポジション"
+              value={newExperience.position}
+              onChange={(e) =>
+                setNewExperience({ ...newExperience, position: e.target.value })
+              }
+              className="border p-2 mb-2 w-full"
+            />
+            <input
+              type="text"
+              placeholder="開始日"
+              value={newExperience.startDate}
+              onChange={(e) =>
+                setNewExperience({
+                  ...newExperience,
+                  startDate: e.target.value,
+                })
+              }
+              className="border p-2 mb-2 w-full"
+            />
+            <input
+              type="text"
+              placeholder="終了日"
+              value={newExperience.endDate}
+              onChange={(e) =>
+                setNewExperience({ ...newExperience, endDate: e.target.value })
+              }
+              className="border p-2 mb-2 w-full"
+            />
+            <input
+              type="text"
+              placeholder="リンク"
+              value={newExperience.link}
+              onChange={(e) =>
+                setNewExperience({ ...newExperience, link: e.target.value })
+              }
+              className="border p-2 mb-2 w-full"
+            />
+            <textarea
+              placeholder="説明"
+              value={newExperience.description}
+              onChange={(e) =>
+                setNewExperience({
+                  ...newExperience,
+                  description: e.target.value,
+                })
+              }
+              className="border p-2 mb-2 w-full"
+            />
+            <button
+              onClick={() => {
+                console.log("追加ボタンが押されました");
+                setAuthAction("add");
+                setShowAuthModal(true); // 追加時に認証を求める
+              }}
+              className="bg-blue-500 text-white p-2 rounded"
+            >
+              追加
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
