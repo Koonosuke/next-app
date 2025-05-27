@@ -111,40 +111,53 @@ export default function Timeline() {
 
       <div className="timeline relative border-l border-gray-300 pl-6">
         {experiences.map((exp) => (
-          <div key={exp.id} className="timeline-item mb-8">
-            <div className="flex items-center mb-1">
-              <div className="w-3 h-3 bg-blue-500 rounded-full -ml-1.5 mr-4"></div>
-              <h3 className="text-xl font-semibold">
-                {exp.link ? (
-                  <Link href={exp.link} legacyBehavior>
-                    <a
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="hover:text-blue-700"
-                    >
-                      {exp.title}
-                    </a>
-                  </Link>
-                ) : (
-                  exp.title
-                )}
-              </h3>
+          <div
+            key={exp.id}
+            className="relative mb-10 pl-6 border-l-4 border-blue-400"
+          >
+            {/* タイムラインドット */}
+            <div className="absolute w-4 h-4 bg-blue-500 rounded-full -left-2 top-2 border-4 border-white"></div>
+
+            {/* 経歴カード */}
+            <div className="bg-white shadow-md rounded-md p-5 ml-2">
+              <div className="flex justify-between items-start">
+                <div>
+                  <p className="text-sm text-gray-500 mb-1">
+                    {exp.position} | {exp.startDate} - {exp.endDate}
+                  </p>
+                  <h3 className="text-xl font-semibold text-blue-700">
+                    {exp.link ? (
+                      <Link href={exp.link} legacyBehavior>
+                        <a
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="hover:underline"
+                        >
+                          {exp.title}
+                        </a>
+                      </Link>
+                    ) : (
+                      exp.title
+                    )}
+                  </h3>
+                </div>
+                {/* 削除ボタン */}
+                <button
+                  onClick={() => {
+                    setAuthAction("delete");
+                    setTargetId(exp.id);
+                    setShowAuthModal(true);
+                  }}
+                  className="text-red-500 text-xs hover:underline"
+                >
+                  削除
+                </button>
+              </div>
+
+              <p className="mt-3 text-gray-700 text-sm whitespace-pre-line">
+                {exp.description}
+              </p>
             </div>
-            <p className="text-sm text-gray-500 mb-1">
-              {exp.position} | {exp.startDate} - {exp.endDate}
-            </p>
-            <p className="text-base text-gray-700">{exp.description}</p>
-            <button
-              onClick={() => {
-                console.log("削除ボタンが押されました。対象ID:", exp.id);
-                setAuthAction("delete");
-                setTargetId(exp.id);
-                setShowAuthModal(true); // 削除時に認証を求める
-              }}
-              className="text-red-500"
-            >
-              削除
-            </button>
           </div>
         ))}
       </div>
