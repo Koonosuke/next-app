@@ -7,6 +7,7 @@ import {
   LinearScale,
   Title,
   Tooltip,
+  TooltipItem,
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
@@ -35,7 +36,7 @@ const chartOptions = (title: string) => ({
     },
     tooltip: {
       callbacks: {
-        label: (context: any) => `Skill Level: ${context.raw}`,
+        label: (context: TooltipItem<"bar">) => `Skill Level: ${context.raw}`,
       },
     },
   },
