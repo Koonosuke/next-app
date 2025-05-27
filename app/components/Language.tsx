@@ -9,6 +9,7 @@ import {
   Tooltip,
   TooltipItem,
 } from "chart.js";
+import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
 
 // Chart.jsのプラグイン登録
@@ -21,14 +22,25 @@ ChartJS.register(
   Legend
 );
 
-// グラフオプション（横向き・レジェンド非表示）
+// ✅ カスタムフックで画面幅取得
+const useWindowWidth = () => {
+  const [width, setWidth] = useState<number | null>(null);
+  useEffect(() => {
+    const handleResize = () => setWidth(window.innerWidth);
+    handleResize(); // 初回実行
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+  return width;
+};
+
+// グラフオプション（横向き・レスポンシブ）
 const chartOptions = (title: string) => ({
   indexAxis: "y" as const,
   responsive: true,
+  maintainAspectRatio: false,
   plugins: {
-    legend: {
-      display: false,
-    },
+    legend: { display: false },
     title: {
       display: true,
       text: title,
@@ -44,14 +56,12 @@ const chartOptions = (title: string) => ({
     x: {
       min: 0,
       max: 10,
-      ticks: {
-        stepSize: 1,
-      },
+      ticks: { stepSize: 1 },
     },
   },
 });
 
-// カスタムカラーで視認性UP
+// カスタムカラー
 const barColors = [
   "#4dc9f6",
   "#f67019",
@@ -64,7 +74,7 @@ const barColors = [
   "#8549ba",
 ];
 
-// プログラミングスキル（10段階）
+// プログラミングスキル
 const programmingData = {
   labels: [
     "Java",
@@ -86,7 +96,7 @@ const programmingData = {
   ],
 };
 
-// バッジに表示するインフラスキル
+// インフラスキル
 const infraSkills = [
   "AWS",
   "EC2",
@@ -108,7 +118,7 @@ const infraSkills = [
   "GitHub Actions",
 ];
 
-// JSXでバッジ表示
+// バッジ表示
 const SkillBadges = ({ skills }: { skills: string[] }) => (
   <div className="flex flex-wrap gap-3 mt-4">
     {skills.map((skill, idx) => (
@@ -124,9 +134,14 @@ const SkillBadges = ({ skills }: { skills: string[] }) => (
 
 // メインコンポーネント
 const LanguageChart = () => {
+  const width = useWindowWidth();
+
   return (
     <div className="space-y-12 px-4 max-w-4xl mx-auto py-10">
-      <div className="bg-white shadow-md rounded-md p-6">
+      <div
+        className="bg-white shadow-md rounded-md p-6"
+        style={{ height: width && width < 640 ? "450px" : "300px" }}
+      >
         <Bar
           data={programmingData}
           options={chartOptions("Programming Skills (10-point scale)")}
